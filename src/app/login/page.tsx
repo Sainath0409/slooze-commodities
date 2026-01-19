@@ -141,7 +141,13 @@ export default function LoginPage() {
 
             {/* 3. MOBILE/TABLET CENTERED FORM (Visible only on screens < 1024px) */}
             <div className="lg:hidden relative z-10 flex w-full items-center justify-center p-4 min-h-screen">
-                <Card className="w-full max-w-md border-none shadow-2xl glassmorphism p-2">
+                <Card className="w-full max-w-md
+  bg-white/20 dark:bg-black/30
+  backdrop-blur-xl
+  border border-white/30 dark:border-white/10
+  shadow-2xl
+  rounded-2xl
+  p-2">
                     <LoginForm handleLogin={handleLogin} email={email} setEmail={setEmail} password={password} setPassword={setPassword} isMobile />
                 </Card>
             </div>
