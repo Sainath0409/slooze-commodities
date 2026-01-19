@@ -184,7 +184,7 @@ function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobi
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20 placeholder:text-gray-400' : 'bg-muted/50'} focus:ring-primary transition-all`}
+                            className={`${isMobile ? 'bg-white/80 text-black backdrop-blur-md border-white/20 placeholder:text-gray-500' : 'bg-muted/50'} focus:ring-primary transition-all`}
                         />
                     </div>
                     <div className="grid gap-2">
@@ -201,7 +201,7 @@ function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobi
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20 placeholder:text-gray-400' : 'bg-muted/50'} focus:ring-primary transition-all`}
+                            className={`${isMobile ? 'bg-white/80 text-black backdrop-blur-md border-white/20 placeholder:text-gray-500' : 'bg-muted/50'} focus:ring-primary transition-all`}
                         />
                     </div>
                 </CardContent>
