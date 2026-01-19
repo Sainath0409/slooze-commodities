@@ -190,7 +190,7 @@ function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobi
                     <div className="grid gap-2">
                         <div className="flex items-center justify-between">
                             <Label htmlFor="password" className={`text-sm font-semibold ${isMobile ? 'text-white' : ''}`}>Password</Label>
-                            <Button type="button" variant="link" className={`p-0 h-auto text-xs font-normal ${isMobile ? 'text-gray-300 hover:text-white' : ''}`}>
+                            <Button type="button" variant="link" className={`p-0 h-auto text-xs font-normal ${isMobile ? 'text-white/90 hover:text-white' : ''}`}>
                                 Forgot password?
                             </Button>
                         </div>
@@ -209,8 +209,8 @@ function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobi
                     <Button className="w-full text-lg font-semibold py-6 shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.98]" type="submit">
                         Sign in
                     </Button>
-                    <p className={`text-sm text-center ${isMobile ? 'text-gray-300' : 'text-muted-foreground'}`}>
-                        Don&apos;t have an account? <Button type="button" variant="link" className="p-0 h-auto font-semibold hover:text-primary">Contact admin</Button>
+                    <p className={`text-sm text-center ${isMobile ? 'text-white/80' : 'text-muted-foreground'}`}>
+                        Don&apos;t have an account? <Button type="button" variant="link" className={`p-0 h-auto font-semibold ${isMobile ? 'text-white hover:underline' : 'hover:text-primary'}`}>Contact admin</Button>
                     </p>
                 </CardFooter>
             </form>
