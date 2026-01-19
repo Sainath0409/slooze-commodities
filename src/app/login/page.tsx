@@ -70,8 +70,9 @@ export default function LoginPage() {
 
     return (
         <div className="flex min-h-screen w-full overflow-hidden bg-background relative">
-            {/* Background Carousel (Visible on all devices) */}
-            <div className="fixed inset-0 z-0">
+
+            {/* 1. MOBILE/TABLET BACKGROUND (Visible only on screens < 1024px) */}
+            <div className="lg:hidden fixed inset-0 z-0">
                 {images.map((img, index) => (
                     <div
                         key={index}
@@ -85,36 +86,40 @@ export default function LoginPage() {
                             className="object-cover"
                             priority={index === 0}
                         />
-                        {/* Overlay to ensure readability */}
-                        <div className="absolute inset-0 bg-black/50 lg:bg-black/20" />
+                        <div className="absolute inset-0 bg-black/60" />
                     </div>
                 ))}
             </div>
 
-            {/* Left Side: Text Content (Hidden on Mobile/Tablet, visible on LG) */}
-            <div className="hidden lg:flex lg:w-1/2 relative z-10 flex-col justify-end p-12 text-white">
-                <div className="space-y-4 max-w-lg mb-12">
+            {/* 2. DESKTOP SIDE-BY-SIDE LAYOUT (Visible on screens >= 1024px) */}
+            <div className="hidden lg:flex w-full min-h-screen">
+                {/* Desktop Left: Image Carousel Section */}
+                <div className="w-1/2 relative overflow-hidden bg-muted">
                     {images.map((img, index) => (
                         <div
                             key={index}
-                            className={`transition-all duration-700 ${index === currentImage ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 absolute"
+                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentImage ? "opacity-100" : "opacity-0"
                                 }`}
                         >
-                            {index === currentImage && (
-                                <>
-                                    <h2 className="text-5xl font-bold tracking-tight mb-4">
-                                        {img.title}
-                                    </h2>
-                                    <p className="text-xl text-gray-200">
-                                        {img.description}
-                                    </p>
-                                </>
-                            )}
+                            <Image
+                                src={img.url}
+                                alt={img.title}
+                                fill
+                                className="object-cover"
+                                priority={index === 0}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                            <div className="absolute bottom-12 left-12 right-12 text-white space-y-4">
+                                <h2 className="text-4xl font-bold tracking-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
+                                    {img.title}
+                                </h2>
+                                <p className="text-lg text-gray-200 max-w-md animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                                    {img.description}
+                                </p>
+                            </div>
                         </div>
                     ))}
-
-                    {/* Carousel Indicators (only for visual feedback on text change) */}
-                    <div className="flex gap-2 mt-8">
+                    <div className="absolute bottom-8 left-12 flex gap-2">
                         {images.map((_, index) => (
                             <div
                                 key={index}
@@ -124,65 +129,82 @@ export default function LoginPage() {
                         ))}
                     </div>
                 </div>
+
+                {/* Desktop Right: Login Form Section */}
+                <div className="w-1/2 flex items-center justify-center p-8 bg-background">
+                    {/* The Login Card (Desktop Version) */}
+                    <Card className="w-full max-w-md border-none shadow-none">
+                        <LoginForm handleLogin={handleLogin} email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+                    </Card>
+                </div>
             </div>
 
-            {/* Right Side / Center Content: Login Form */}
-            <div className="relative z-10 flex w-full lg:w-1/2 items-center justify-center p-4 sm:p-8">
-                <Card className="w-full max-w-md border-none shadow-2xl glassmorphism animate-in fade-in zoom-in duration-500">
-                    <CardHeader className="space-y-1">
-                        <div className="flex justify-center mb-6">
-                            <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/30">
-                                <span className="text-primary-foreground font-bold text-2xl">S</span>
-                            </div>
-                        </div>
-                        <CardTitle className="text-3xl font-bold tracking-tight text-center">Welcome back</CardTitle>
-                        <CardDescription className="text-center font-medium">
-                            Enter your credentials to access your dashboard
-                        </CardDescription>
-                    </CardHeader>
-                    <form onSubmit={handleLogin}>
-                        <CardContent className="grid gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="email" className="text-sm font-semibold">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="name@company.com"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="bg-background/20 backdrop-blur-md border-white/20 focus:bg-background/40 transition-all"
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <div className="flex items-center justify-between">
-                                    <Label htmlFor="password" name="password" className="text-sm font-semibold">Password</Label>
-                                    <Button type="button" variant="link" className="p-0 h-auto text-xs font-normal text-primary-foreground/80 hover:text-primary-foreground">
-                                        Forgot password?
-                                    </Button>
-                                </div>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    placeholder="••••••••"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="bg-background/20 backdrop-blur-md border-white/20 focus:bg-background/40 transition-all"
-                                />
-                            </div>
-                        </CardContent>
-                        <CardFooter className="flex flex-col gap-4 mt-6">
-                            <Button className="w-full text-lg font-semibold py-6 shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.98]" type="submit">
-                                Sign in
-                            </Button>
-                            <p className="text-sm text-center text-muted-foreground">
-                                Don&apos;t have an account? <Button type="button" variant="link" className="p-0 h-auto font-semibold hover:text-primary">Contact admin</Button>
-                            </p>
-                        </CardFooter>
-                    </form>
+            {/* 3. MOBILE/TABLET CENTERED FORM (Visible only on screens < 1024px) */}
+            <div className="lg:hidden relative z-10 flex w-full items-center justify-center p-4 min-h-screen">
+                <Card className="w-full max-w-md border-none shadow-2xl glassmorphism p-2">
+                    <LoginForm handleLogin={handleLogin} email={email} setEmail={setEmail} password={password} setPassword={setPassword} isMobile />
                 </Card>
             </div>
         </div>
+    );
+}
+
+// Reusable Login Form Component for both layouts
+function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobile = false }) {
+    return (
+        <>
+            <CardHeader className="space-y-1">
+                <div className="flex justify-center mb-6">
+                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/30">
+                        <span className="text-primary-foreground font-bold text-2xl">S</span>
+                    </div>
+                </div>
+                <CardTitle className={`text-3xl font-bold tracking-tight text-center ${isMobile ? 'text-white' : ''}`}>Welcome back</CardTitle>
+                <CardDescription className={`text-center font-medium ${isMobile ? 'text-gray-200' : ''}`}>
+                    Enter your credentials to access your dashboard
+                </CardDescription>
+            </CardHeader>
+            <form onSubmit={handleLogin}>
+                <CardContent className="grid gap-6">
+                    <div className="grid gap-2">
+                        <Label htmlFor="email" className={`text-sm font-semibold ${isMobile ? 'text-white' : ''}`}>Email</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="name@company.com"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20' : 'bg-muted/50'} focus:ring-primary transition-all`}
+                        />
+                    </div>
+                    <div className="grid gap-2">
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="password" className={`text-sm font-semibold ${isMobile ? 'text-white' : ''}`}>Password</Label>
+                            <Button type="button" variant="link" className={`p-0 h-auto text-xs font-normal ${isMobile ? 'text-gray-300 hover:text-white' : ''}`}>
+                                Forgot password?
+                            </Button>
+                        </div>
+                        <Input
+                            id="password"
+                            type="password"
+                            placeholder="••••••••"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20' : 'bg-muted/50'} focus:ring-primary transition-all`}
+                        />
+                    </div>
+                </CardContent>
+                <CardFooter className="flex flex-col gap-4 mt-6">
+                    <Button className="w-full text-lg font-semibold py-6 shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.98]" type="submit">
+                        Sign in
+                    </Button>
+                    <p className={`text-sm text-center ${isMobile ? 'text-gray-300' : 'text-muted-foreground'}`}>
+                        Don&apos;t have an account? <Button type="button" variant="link" className="p-0 h-auto font-semibold hover:text-primary">Contact admin</Button>
+                    </p>
+                </CardFooter>
+            </form>
+        </>
     );
 }
