@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { toast } from "sonner";
 import Image from "next/image";
+import { users } from "@/mock/users";
 
 const images = [
     {
@@ -52,7 +53,6 @@ export default function LoginPage() {
                 description: "Welcome back to Slooze Commodities",
             });
 
-            const { users } = require("@/mock/users");
             const user = users.find((u: any) => u.email === email);
 
             if (user?.role === "MANAGER") {
@@ -149,8 +149,17 @@ export default function LoginPage() {
     );
 }
 
+interface LoginFormProps {
+    handleLogin: (e: React.FormEvent) => void;
+    email: string;
+    setEmail: (email: string) => void;
+    password: string;
+    setPassword: (password: string) => void;
+    isMobile?: boolean;
+}
+
 // Reusable Login Form Component for both layouts
-function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobile = false }) {
+function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobile = false }: LoginFormProps) {
     return (
         <>
             <CardHeader className="space-y-1">
@@ -175,7 +184,7 @@ function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobi
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20' : 'bg-muted/50'} focus:ring-primary transition-all`}
+                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20 placeholder:text-gray-400' : 'bg-muted/50'} focus:ring-primary transition-all`}
                         />
                     </div>
                     <div className="grid gap-2">
@@ -192,7 +201,7 @@ function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobi
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20' : 'bg-muted/50'} focus:ring-primary transition-all`}
+                            className={`${isMobile ? 'bg-background/20 text-white backdrop-blur-md border-white/20 placeholder:text-gray-400' : 'bg-muted/50'} focus:ring-primary transition-all`}
                         />
                     </div>
                 </CardContent>
