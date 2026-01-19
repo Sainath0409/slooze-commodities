@@ -169,7 +169,7 @@ function LoginForm({ handleLogin, email, setEmail, password, setPassword, isMobi
                     </div>
                 </div>
                 <CardTitle className={`text-3xl font-bold tracking-tight text-center ${isMobile ? 'text-white' : ''}`}>Welcome back</CardTitle>
-                <CardDescription className={`text-center font-medium ${isMobile ? 'text-gray-200' : ''}`}>
+                <CardDescription className={`text-center font-medium ${isMobile ? 'text-white' : ''}`}>
                     Enter your credentials to access your dashboard
                 </CardDescription>
             </CardHeader>
